@@ -33,7 +33,7 @@ packaging_matrix:
     matrix:
       - PHP_VERSION: ["7.2", "7.3", "7.4", "8.0", "8.1", "8.2", "8.3"]
   script:
-    - apt-get update && apt-get install -y git curl unzip
+    - apt-get update && apt-get install -y git curl unzip bash
     - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - docker login registry.gitlab.com -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - echo "build_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> build.env
