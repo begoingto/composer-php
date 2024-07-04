@@ -19,7 +19,7 @@ packaging:
     - docker login registry.gitlab.com -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - echo "build_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> build.env
     - depot login --token $DEPOT_PROJECT_TOKEN
-    - depot build-push --project $DEPOT_PROJECT_ID --context . --file ./Dockerfile --tags "registry.gitlab.com/registry2092427/composer-php:v${CI_COMMIT_REF_NAME}-php${CI_JOB_NAME}-alpine" --push --build-arg "VCS_REF=${CI_COMMIT_SHA}" --build-arg "BUILD_DATE=$(cat build.env)" --build-arg "PHP_VERSION=${CI_JOB_NAME}" --build-arg "COMPOSER_VERSION=2" --build-arg "IMAGE_TAG=registry.gitlab.com/registry2092427/composer-php:v${CI_COMMIT_REF_NAME}-php${CI_JOB_NAME}-alpine"
+    - dokcer build --context . --file ./Dockerfile --tags "registry.gitlab.com/registry2092427/composer-php:v${CI_COMMIT_REF_NAME}-php${CI_JOB_NAME}-alpine" --push --build-arg "VCS_REF=${CI_COMMIT_SHA}" --build-arg "BUILD_DATE=$(cat build.env)" --build-arg "PHP_VERSION=${CI_JOB_NAME}" --build-arg "COMPOSER_VERSION=2" --build-arg "IMAGE_TAG=registry.gitlab.com/registry2092427/composer-php:v${CI_COMMIT_REF_NAME}-php${CI_JOB_NAME}-alpine"
 
 packaging_matrix:
   stage: build
@@ -37,8 +37,7 @@ packaging_matrix:
     - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - docker login registry.gitlab.com -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - echo "build_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> build.env
-    - depot login --token $DEPOT_PROJECT_TOKEN
-    - depot build-push --project $DEPOT_PROJECT_ID --context . --file ./Dockerfile --tags "registry.gitlab.com/registry2092427/composer-php:v${CI_COMMIT_REF_NAME}-php${PHP_VERSION}-alpine" --push --build-arg "VCS_REF=${CI_COMMIT_SHA}" --build-arg "BUILD_DATE=$(cat build.env)" --build-arg "PHP_VERSION=${PHP_VERSION}" --build-arg "COMPOSER_VERSION=2" --build-arg "IMAGE_TAG=registry.gitlab.com/registry2092427/composer-php:v${CI_COMMIT_REF_NAME}-php${PHP_VERSION}-alpine"
+    - dokcer build --project $DEPOT_PROJECT_ID --context . --file ./Dockerfile --tags "registry.gitlab.com/registry2092427/composer-php:v${CI_COMMIT_REF_NAME}-php${PHP_VERSION}-alpine" --push --build-arg "VCS_REF=${CI_COMMIT_SHA}" --build-arg "BUILD_DATE=$(cat build.env)" --build-arg "PHP_VERSION=${PHP_VERSION}" --build-arg "COMPOSER_VERSION=2" --build-arg "IMAGE_TAG=registry.gitlab.com/registry2092427/composer-php:v${CI_COMMIT_REF_NAME}-php${PHP_VERSION}-alpine"
 
 components:
   stage: test
