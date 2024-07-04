@@ -8,9 +8,9 @@ variables:
 
 packaging:
   stage: build
-  image: docker:dind
+  image: ubuntu:latest
   services:
-    - ubuntu:latest
+    - docker:dind
   variables:
     DOCKER_DRIVER: overlay2
   script:
@@ -23,9 +23,9 @@ packaging:
 
 packaging_matrix:
   stage: build
-  image: docker:dind
+  image: "php:${PHP_VERSION}"
   services:
-    - "php:${PHP_VERSION}"
+    - docker:dind
   variables:
     PHP_VERSION: ${PHP_VERSION}
     COMPOSER_VERSION: "2"
