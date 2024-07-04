@@ -8,13 +8,13 @@ variables:
 
 packaging:
   stage: build
-  image: ubuntu:latest
+  image: docker:dind
   services:
-    - docker:dind
+    - ubuntu:latest
   variables:
     DOCKER_DRIVER: overlay2
   script:
-    - apt-get update && apt-get install -y curl
+    - apt-get update && apt-get install -y curl bash
     - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - docker login registry.gitlab.com -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - echo "build_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> build.env
@@ -23,9 +23,9 @@ packaging:
 
 packaging_matrix:
   stage: build
-  image: "php:${PHP_VERSION}"
+  image: docker:dind
   services:
-    - docker:dind
+    - "php:${PHP_VERSION}"
   variables:
     PHP_VERSION: ${PHP_VERSION}
     COMPOSER_VERSION: "2"
